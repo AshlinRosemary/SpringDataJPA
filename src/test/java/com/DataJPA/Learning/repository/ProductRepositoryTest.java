@@ -75,5 +75,19 @@ class ProductRepositoryTest {
             System.out.println(p.getName());
         });
     }
+    @Test
+    void deletebyIDMethod(){
+        Long id=1L;
+        productRepository.deleteById(id);
+    }
+    @Test
+    void deleteMethod(){
+        //find an entity by id
+        Long id=2L;
+        Product product=productRepository.findById(id).get();
+        //delete(entity)
+        productRepository.delete(product);
+
+    }
 
 }
