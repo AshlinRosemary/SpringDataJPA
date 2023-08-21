@@ -1,6 +1,7 @@
 package com.DataJPA.Learning.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.boot.autoconfigure.web.WebProperties;
@@ -9,6 +10,11 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Table(
       name = "products" ,
         schema = "ecommerce",
@@ -23,7 +29,15 @@ public class Product {
 //Plain old java object (POJO)
     //JPA annotation is given to make this class as Java Entity
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "product_generator"
+    )
+    @SequenceGenerator(
+            name = "product_generator",
+            sequenceName = "product_sequence_name",
+            allocationSize = 1
+    )
     private Long id;
     @Column(name = "stock_keeping_unit",nullable = false)
     private String sku;
@@ -38,75 +52,4 @@ public class Product {
     @UpdateTimestamp
     private LocalDateTime lastUpdated;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getSku() {
-        return sku;
-    }
-
-    public void setSku(String sku) {
-        this.sku = sku;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public String getImageurl() {
-        return imageurl;
-    }
-
-    public void setImageurl(String imageurl) {
-        this.imageurl = imageurl;
-    }
-
-    public LocalDateTime getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(LocalDateTime dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public LocalDateTime getLastUpdated() {
-        return lastUpdated;
-    }
-
-    public void setLastUpdated(LocalDateTime lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
 }
