@@ -89,5 +89,20 @@ class ProductRepositoryTest {
         productRepository.delete(product);
 
     }
+    @Test
+    void deleteAllMethod(){
+        productRepository.deleteAll();
+    }
+    @Test
+    void countMethod(){
+        long count= productRepository.count();
+        System.out.println(count);
+    }
+    @Test
+    void existByIDMethod(){
+        Long id=6L;
+        boolean result=productRepository.existsById(id);
+        System.out.println(result);
+    }
 
 }
