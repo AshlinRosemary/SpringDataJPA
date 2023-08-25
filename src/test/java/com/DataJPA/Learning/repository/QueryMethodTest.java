@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,4 +49,45 @@ public class QueryMethodTest {
             System.out.println(s.getDateCreated());
         });
      }
+@Test
+     void findDistinctByName(){
+    Product product=productRepository.findDistinctByName("Product1");
+    System.out.println(product.getName());
+    System.out.println(product.getLastUpdated());
+     }
+@Test
+     void findByPriceGreaterThan(){
+        List<Product>  products=productRepository.findByPriceGreaterThan(new BigDecimal(100));
+
+        products.forEach(p->{
+            System.out.println(p.getName());
+            System.out.println(p.getId());
+        });
+     }
+     @Test
+     void findByPriceLessThan(){
+        List<Product> products=productRepository.findByPriceLessThan(new BigDecimal(300));
+        products.forEach(ps ->{
+            System.out.println(ps.getName());
+            System.out.println(ps.getId());
+        } );
+     }
+/*@Test
+     void findByNameContainingMethod(String name){
+        List<Product> products=productRepository.findByNameContainingMethod("Product1");
+    products.forEach((p )->{
+        System.out.println(p.getName());
+        System.out.println(p.getId());
+    } );
+     }
+*/
+@Test
+void findByNameContaining() {
+    List<Product> products = productRepository.findByNameContaining("Product1");
+    products.forEach(p -> {
+        System.out.println(p.getName());
+        System.out.println( p.getId());
+    });
+}
+
 }
