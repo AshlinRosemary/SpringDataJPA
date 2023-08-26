@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,12 +83,59 @@ public class QueryMethodTest {
      }
 */
 @Test
-void findByNameContaining() {
-    List<Product> products = productRepository.findByNameContaining("Product1");
-    products.forEach(p -> {
-        System.out.println(p.getName());
-        System.out.println( p.getId());
+    void findByNameContaining() {
+        List<Product> products = productRepository.findByNameContaining("Product1");
+        products.forEach(p -> {
+            System.out.println(p.getName());
+            System.out.println( p.getId());
+        });
+    }
+@Test
+    void findByNameLikeMethod(){
+    List<Product> products=productRepository.findByNameLike("Product2");
+    products.forEach((pdts)->{
+        System.out.println(pdts.getName());
+        System.out.println( pdts.getId());
     });
-}
+    }
+
+@Test
+    void findByPriceBetweenMethod(){
+        List<Product> products=productRepository.findByPriceBetween(new BigDecimal(100),
+                new BigDecimal(300));
+        products.forEach((p)->{
+            System.out.println(p.getName());
+            System.out.println( p.getId());
+        });
+    }
+
+    //2023-08-23 17:03:09.796592
+    //2023-08-23 17:03:37.441408
+    @Test
+    void findByDateCreatedBetweenMethod(){
+        LocalDateTime startDate= LocalDateTime.of(2023,8,23,17,03,9);
+        LocalDateTime endDate=LocalDateTime.of(2023,8,23,17,3,37);
+    List<Product> products=productRepository.findByDateCreatedBetween(startDate,endDate);
+        products.forEach((p)->{
+            System.out.println(p.getName());
+            System.out.println( p.getId());
+        });
+    }
+@Test
+    void findByNameInMethod(){
+        List<Product> products=productRepository.findByNameIn(List.of("Product1","Product2"));
+        products.forEach((p)->{
+            System.out.println(p.getName());
+            System.out.println( p.getId());
+        });
+    }
+@Test
+    void findFirst2ByOrderByNameAscMethod(){
+        List<Product> products=productRepository.findFirst2ByOrderByNameAsc();
+        products.forEach((p)->{
+            System.out.println(p.getName());
+            System.out.println( p.getId());
+        });
+    }
 
 }
